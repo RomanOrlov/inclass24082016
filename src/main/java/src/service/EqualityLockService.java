@@ -9,6 +9,7 @@ import java.util.concurrent.locks.ReentrantLock;
 таска - сделать так, чтобы при вызове run с объектом, который эквивалентен объекту,
 который уже выполняется, - метод должен ждать.
 нужна - некая мапа с текущими вызовами.
+решение похожее на кас
  */
 public class EqualityLockService implements Service {
     private final Service service;
@@ -37,8 +38,6 @@ public class EqualityLockService implements Service {
     }
 
     private ReentrantLock getLock(Object o) {
-        synchronized (mapGuardian) {
-            return map.putIfAbsent(o, new ReentrantLock());
-        }
+        return map.putIfAbsent(o, new ReentrantLock());
     }
 }
